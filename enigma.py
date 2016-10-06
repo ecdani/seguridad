@@ -10,6 +10,7 @@ class Enigma:
     
     # Estado interno
     rk1, rk2, rk3 = 0,0,0
+    rk = (0,0,0)
     inv = False
 
     def clavijas(self,ch):
@@ -18,6 +19,29 @@ class Enigma:
             return self.abc[self.clv.index(ch)]
         else:
             return self.clv[self.abc.index(ch)]
+
+    def rotor(self,ch,abc,rot,n):
+        s = self.rot[(self.abc.index(ch)+self.rk[n]]) % 26] # Decode
+        s = self.abc[(self.abc.index(s)-self.rk[n]) % 26]
+        return s
+
+    def clav(self,ch,abc,clv):
+        return self.clv[self.abc.index(ch)]
+
+    def code(self,ch):
+        ch = clav(ch,self.abc,self.clv)
+        self.rk[3] += 1
+        ch = rotor(ch,self.abc,self.r3,3)
+        
+        ch = rotor(ch,self.abc,self.r2,2)
+        ch = rotor(ch,self.abc,self.r1,1)
+        ch = reflector(ch)
+        ch = rotor(ch,self.r1,self.abc,1)
+        ch = rotor(ch,self.r2,self.abc,2)
+        ch = rotor(ch,self.r3,self.abc,3)
+        ch = clav(ch,self.clv,self.abc)
+        print ("Encode:"+ch)
+        return ch
 
     def rotor3(self,ch):
         """
