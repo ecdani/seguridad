@@ -7,6 +7,7 @@ class Enigma:
     clv = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
     key = list('KWC')
     msj = list('CALIDADDESISTEMASSOFTWAREFRANCISCOMONTEROESCUELASUPERIORDEINGENIERIAINFORMATICA')
+    # msj = list('FSNKOYQVXODDOWABMAHVCHSKZPOOIPUZMBETDDWMYSVVRSXTMJAUZJUVPBDCVVIVDZKQCHYAOXEANIT')
 
     # Estado interno
     rk1, rk2, rk3 = 0,0,0
@@ -56,6 +57,6 @@ class Enigma:
         cod = list()
         for ch in self.msj:
             cod.append(self.encode(ch))
-        print(cod)
+        print("".join(cod))
 
 Enigma().translate()
