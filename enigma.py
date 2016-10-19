@@ -5,8 +5,8 @@ class Enigma:
     r3 =  list('BDFHJLCPRTXVZNYEIWGAKMUSQO')
     rfb = list('YRUHQSLDPXNGOKMIEBFZCWVJAT')
     clv = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-    key = list('KWC')
-    msj = list('CALIDADDESISTEMASSOFTWAREFRANCISCOMONTEROESCUELASUPERIORDEINGENIERIAINFORMATICA')
+    key = list('BDT')
+    msj = list('JDLSIEURJNZMAKFLDPOEUERUNVMNXJDHEYHHHHWJXBSKQUERHBSKJNA')
 
     # Estado interno
     rk1, rk2, rk3 = 0,0,0
@@ -28,10 +28,10 @@ class Enigma:
 
     def rotar(self):
         self.rk3 += 1
-        if self.rk3 == 26:
+        if self.rk3 == 22:#w
             self.rk3 = 0
             self.rk2 += 1
-        if self.rk2 == 26:
+        if self.rk2 == 5:#f
             self.rk2 = 0
             self.rk1 += 1
 
