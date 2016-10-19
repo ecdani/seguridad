@@ -56,6 +56,6 @@ class Enigma:
         cod = list()
         for ch in self.msj:
             cod.append(self.encode(ch))
-        print(cod)
+        print("".join(cod))
 
 Enigma().translate()
