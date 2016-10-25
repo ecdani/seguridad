@@ -8,68 +8,70 @@ class Bomba:
     r3 = list('BDFHJLCPRTXVZNYEIWGAKMUSQO')
     rfb = list('YRUHQSLDPXNGOKMIEBFZCWVJAT')
 
-    # dic = ['AMBIGUO', 'OBVIO', 'TRIVIAL', 'ESTUPENDO', 'ESTHER', 'BUGZILLA', 'THEVENIN', 'PACIFICO', 'DIARREA', 'HOLA', 'MUNDO', 'GARABATA', 'PAPILOMA', 'HERPES', 'CELULA', 'PORRO', 'SUAVES', 'DIMITRI', 'FIESTA', 'PATATA', ]
-    dic = ['NAZI']
+    #dic = ['AMBIGUO', 'OBVIO', 'TRIVIAL', 'ESTUPENDO', 'ESTHER', 'BUGZILLA', 'THEVENIN', 'PACIFICO', 'DIARREA', 'HOLA', 'MUNDO', 'GARABATA', 'PAPILOMA', 'HERPES', 'CELULA', 'PORRO', 'SUAVES', 'DIMITRI', 'FIESTA', 'PATATA', ]
+    dic = ['DEMIAN'] #
 
-    key = list('AAA')
-    # msj = list('GSUTUBBWAXCANFJPPQRLDQQWDJTSVEXHUDHS')
-    msj = list('CWOINBYPQJZJX')
+    #codigo = list('GSUTUBBWAXCANFJPPQRLDQQWDJTSVEXHUDHS')
+    codigo = list('AJXGSTMFRCTXBS')
+    msj = ''
 
     # Estado interno
     rk1, rk2, rk3 = 0, 0, 0
 
-    # Bomba
-
     def atacar(self):
-        clv = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
         clvdic = []
-        clv1, clv2 = 0, 0
-        contador = 1
-        inicio = datetime.datetime.now()
-        inicio = inicio.strftime('Iniciado el dia %d-%m-%Y - Hora %H:%M:%S\n')
-        try:
-            archivo = self.abrirtxt()
-        except Exception:
-            archivo = self.creartxt()
-            archivo = self.abrirtxt(archivo)
-        self.escribirarchivo(archivo, inicio)
-        self.cerrararchivo(archivo)
+        clv1, clv2, p, o = 0, 0, 0, 0 # indices clavijeros, progreso, ocurrencias
+
+        # Rendimiento: Asignación a variables locales
+        srk1 = self.rk1
+        srk2 = self.rk2
+        srk3 = self.rk3
+        scodify = self.codify
+        sabc = self.abc
+
+
+        f = open('.\datos.txt', 'w').close()
+        f = open('.\datos.txt', 'a')
+        f.write(((datetime.datetime.now()).strftime('Iniciado el dia %d-%m-%Y - Hora %H:%M:%S\n')))
         for clv1 in range(26):
             for clv2 in range(clv1, 26):
-                # clvdic = self.dic[:]
-                trans_table = str.maketrans(clv[clv1] + clv[clv2], clv[clv2] + clv[clv1])
+                print("clv1 y 2:"+str(clv1)+str(clv2))
+                p += 1
+                print('%i de 676' % p)
+                output =sabc[clv1] + sabc[clv2]
+                input =sabc[clv2] + sabc[clv1]
+                print ('in %s out %s' % (input, output))
+                trans_table = str.maketrans(input, output)
                 clvdic = [word.translate(trans_table) for word in self.dic]
-
-                # print(clvdic[0])
-                # k1, k2, k3 = 0,0,0
+                #clvdic = self.dic
+                #self.msj = [word.translate(trans_table) for word in self.codigo]
+                #self.msj = self.codigo
+                #print(self.dic)
+                #print(self.codigo)
                 for k1 in range(26):
+                    srk1 = k1
                     for k2 in range(26):
+                        srk2 = k2
                         for k3 in range(26):
-                            self.putkey(k1, k2, k3)
-                            sol = self.translate()
-                            sol.translate(trans_table)
+                            srk3 = k3
+                            self.msj = [word.translate(trans_table) for word in self.codigo]
+                            sol = scodify()
+                           # if (k1 == 0 and k2 == 0 and k3 == 0):
+                               # print('PRE::'+sol)
+                                #sol = sol.translate(trans_table)
+                               # print('POST::'+sol)                    
+                            #sol = sol.translate(trans_table)
+       
                             for word in clvdic:
-                                # print(word)
                                 if word in sol:
-                                    parm1 = self.abc[k1] + self.abc[k2] + self.abc[k3]
-                                    parm2 = sol.translate(trans_table)
-                                    parm3 = trans_table
-                                    # print (parm1)
-                                    # print(parm2)
-                                    # print(parm3)
-                                    contador = self.guardar_txt(parm1, parm2, parm3, contador)
-        fin = datetime.datetime.now()
-        fin = fin.strftime('Iniciado el dia %d-%m-Y - Hora %H:%M:%S\n')
-        direrencia = '%s' % (fin - inicio)
-        archivo = self.abrirtxt()
-        archivo = self.escribirarchivo(archivo, fin)
-        archivo = self.escribirarchivo(archivo, direrencia)
-        self.cerrararchivo(archivo)
-
-    def putkey(self, k1, k2, k3):
-        self.rk1 = k1
-        self.rk2 = k2
-        self.rk3 = k3
+                                    print(word)
+                                    o += 1
+                                    
+                                    output = '----**Registro %s**----\n%s\n%s\n%s\n\n' % (o, sabc[k1] + sabc[k2] + sabc[k3], sol, trans_table)
+                                    f.write(output)
+                                    print(output)
+        f.write(datetime.datetime.now().strftime('Iniciado el dia %d-%m-Y - Hora %H:%M:%S\n'))
+        f.close() 
 
     def rotor(self, ch, rot, rk):
         s = rot[(self.abc.index(ch) + rk) % 26]
@@ -79,16 +81,13 @@ class Bomba:
         s = self.abc[(self.abc.index(ch) + rk) % 26]
         return self.abc[(rot.index(s) - rk) % 26]
 
-    def clav(self, ch, abc, clv):
-        return clv[abc.index(ch)]
-
     def rotar(self):
         self.rk3 += 1
         if self.rk3 == 22:  # w
             self.rk2 += 1
         elif self.rk3 == 26:
             self.rk3 = 0
-        if self.rk2 == 4:
+        if self.rk2 == 4: 
             self.rk2 += 1
             self.rk1 += 1
         elif self.rk2 == 26:
@@ -105,43 +104,11 @@ class Bomba:
     def reflector(self, ch):
         return self.rfb[self.abc.index(ch)]
 
-    def translate(self):
-
+    def codify(self):
         cod = list()
+        sencode = self.encode
         for ch in self.msj:
-            cod.append(self.encode(ch))
+            cod.append(sencode(ch))
         return ("".join(cod))
-
-    def guardar_txt(self, parm1, parm2, parm3, contador):
-        cadena = '----**Registro %s**----\n%s\n%s\n%s\n\n' % (contador, parm1, parm2, parm3)
-        try:
-            archivo = self.abrirtxt()
-        except Exception:
-            print("Error!")
-            archivo = self.creartxt()
-            archivo = self.abrirtxt()
-        self.escribirarchivo(archivo, cadena)
-        self.cerrararchivo(archivo)
-        contador += 1
-        return contador
-
-    def creartxt(self, date=None):
-        archi = open('.\datos.txt', 'w')
-        if date:
-            archi = self.escribirarchivo(archi, date)
-        self.cerrararchivo(archi)
-
-    def abrirtxt(self):
-        archivo = open('.\datos.txt', 'a')
-        return archivo
-
-    def escribirarchivo(self, archivo, cadena):
-        print("write!")
-        archivo.write(cadena)
-        return archivo
-
-    def cerrararchivo(self, archivo):
-        archivo.close()
-
 
 Bomba().atacar()
