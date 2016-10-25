@@ -8,69 +8,50 @@ class Bomba:
     r3 = list('BDFHJLCPRTXVZNYEIWGAKMUSQO')
     rfb = list('YRUHQSLDPXNGOKMIEBFZCWVJAT')
 
-    #dic = ['AMBIGUO', 'OBVIO', 'TRIVIAL', 'ESTUPENDO', 'ESTHER', 'BUGZILLA', 'THEVENIN', 'PACIFICO', 'DIARREA', 'HOLA', 'MUNDO', 'GARABATA', 'PAPILOMA', 'HERPES', 'CELULA', 'PORRO', 'SUAVES', 'DIMITRI', 'FIESTA', 'PATATA', ]
-    dic = ['DEMIAN'] #
+    dic = ['AMBIGUO', 'OBVIO', 'TRIVIAL', 'ESTUPENDO', 'ESTHER', 'BUGZILLA', 'THEVENIN', 'PACIFICO', 'DIARREA', 'HOLA', 'MUNDO', 'GARABATA', 'PAPILOMA', 'HERPES', 'CELULA', 'PORRO', 'SUAVES', 'DIMITRI', 'FIESTA', 'PATATA', ]
+    #dic = ['TODA']
 
-    #codigo = list('GSUTUBBWAXCANFJPPQRLDQQWDJTSVEXHUDHS')
-    codigo = list('AJXGSTMFRCTXBS')
-    msj = ''
+    codigo = list('GSUTUBBWAXCANFJPPQRLDQQWDJTSVEXHUDHS')
+    #codigo = list('KZJDOQUPZMAFUJFCESCG')
+    msj = []
 
     # Estado interno
     rk1, rk2, rk3 = 0, 0, 0
 
     def atacar(self):
-        clvdic = []
+        #clvdic = []
         clv1, clv2, p, o = 0, 0, 0, 0 # indices clavijeros, progreso, ocurrencias
 
         # Rendimiento: Asignación a variables locales
-        srk1 = self.rk1
-        srk2 = self.rk2
-        srk3 = self.rk3
         scodify = self.codify
         sabc = self.abc
 
 
         f = open('.\datos.txt', 'w').close()
         f = open('.\datos.txt', 'a')
-        f.write(((datetime.datetime.now()).strftime('Iniciado el dia %d-%m-%Y - Hora %H:%M:%S\n')))
+        f.write(((datetime.datetime.now()).strftime('Iniciado el dia %d-%m-%Y - Hora %H:%M:%S')))
         for clv1 in range(26):
             for clv2 in range(clv1, 26):
-                print("clv1 y 2:"+str(clv1)+str(clv2))
                 p += 1
-                print('%i de 676' % p)
-                output =sabc[clv1] + sabc[clv2]
                 input =sabc[clv2] + sabc[clv1]
-                print ('in %s out %s' % (input, output))
-                trans_table = str.maketrans(input, output)
+                print ('\n%i de 676 Intercambio %s---------' % (p, input))
+                trans_table = str.maketrans(input, sabc[clv1] + sabc[clv2])
                 clvdic = [word.translate(trans_table) for word in self.dic]
-                #clvdic = self.dic
-                #self.msj = [word.translate(trans_table) for word in self.codigo]
-                #self.msj = self.codigo
-                #print(self.dic)
-                #print(self.codigo)
+                self.msj = [word.translate(trans_table) for word in self.codigo]
                 for k1 in range(26):
-                    srk1 = k1
-                    for k2 in range(26):
-                        srk2 = k2
+                    for k2 in range(26):    
                         for k3 in range(26):
-                            srk3 = k3
-                            self.msj = [word.translate(trans_table) for word in self.codigo]
+                            self.rk1 = k1
+                            self.rk2 = k2
+                            self.rk3 = k3
                             sol = scodify()
-                           # if (k1 == 0 and k2 == 0 and k3 == 0):
-                               # print('PRE::'+sol)
-                                #sol = sol.translate(trans_table)
-                               # print('POST::'+sol)                    
-                            #sol = sol.translate(trans_table)
-       
                             for word in clvdic:
                                 if word in sol:
-                                    print(word)
                                     o += 1
-                                    
-                                    output = '----**Registro %s**----\n%s\n%s\n%s\n\n' % (o, sabc[k1] + sabc[k2] + sabc[k3], sol, trans_table)
+                                    output = '\nRegistro %s: Key:%s Msj:%s' % (o, sabc[k1] + sabc[k2] + sabc[k3], sol.translate(trans_table))
                                     f.write(output)
                                     print(output)
-        f.write(datetime.datetime.now().strftime('Iniciado el dia %d-%m-Y - Hora %H:%M:%S\n'))
+        f.write(datetime.datetime.now().strftime('\nTerminado el dia %d-%m-Y - Hora %H:%M:%S'))
         f.close() 
 
     def rotor(self, ch, rot, rk):
