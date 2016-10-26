@@ -34,7 +34,7 @@ class Enigma:
             self.rk3 = 0
         
         # En la posición previa autogira
-        if self.rk2 == 4:
+        if self.rk2 == 4: #f
             self.rk2 += 1
             self.rk1 += 1
         elif self.rk2 == 26:

@@ -8,11 +8,11 @@ class Bomba:
     r3 = list('BDFHJLCPRTXVZNYEIWGAKMUSQO')
     rfb = list('YRUHQSLDPXNGOKMIEBFZCWVJAT')
 
-    dic = ['AMBIGUO', 'OBVIO', 'TRIVIAL', 'ESTUPENDO', 'ESTHER', 'BUGZILLA', 'THEVENIN', 'PACIFICO', 'DIARREA', 'HOLA', 'MUNDO', 'GARABATA', 'PAPILOMA', 'HERPES', 'CELULA', 'PORRO', 'SUAVES', 'DIMITRI', 'FIESTA', 'PATATA', ]
-    #dic = ['TODA']
+    #dic = ['AMBIGUO', 'OBVIO', 'TRIVIAL', 'ESTUPENDO', 'ESTHER', 'BUGZILLA', 'THEVENIN', 'PACIFICO', 'DIARREA', 'HOLA', 'MUNDO', 'GARABATA', 'PAPILOMA', 'HERPES', 'CELULA', 'PORRO', 'SUAVES', 'DIMITRI', 'FIESTA', 'PATATA', ]
+    dic = ['FIESTA']
 
     codigo = list('GSUTUBBWAXCANFJPPQRLDQQWDJTSVEXHUDHS')
-    #codigo = list('KZJDOQUPZMAFUJFCESCG')
+    #codigo = list('RXZRUBOHUAKZOIKCCCE')
     msj = []
 
     # Estado interno
@@ -68,8 +68,8 @@ class Bomba:
             self.rk2 += 1
         elif self.rk3 == 26:
             self.rk3 = 0
-        if self.rk2 == 4: 
-            self.rk2 += 1
+        if self.rk2 == 5: #4 f 
+            #self.rk2 += 1
             self.rk1 += 1
         elif self.rk2 == 26:
             self.rk2 = 0
