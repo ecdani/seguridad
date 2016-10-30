@@ -1,9 +1,8 @@
 import datetime
-
+from multiprocessing import Process
 
 class Bomba:
     abc = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
-    # abcn = (0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)
     r1 = (4,10,12,5,11,6,3,16,21,25,13,19,14,22,24,7,23,20,18,15,0,8,1,17,2,9)
     ri1 = (20,22,24,6,0,3,5,15,21,25,1,4,2,10,12,19,7,23,18,11,17,8,13,16,14,9)
     r2 = (0,9,3,10,18,8,17,20,23,1,11,7,22,19,12,2,16,6,25,13,15,24,5,21,14,4)
@@ -19,33 +18,37 @@ class Bomba:
     # Estado interno
     rk1, rk2, rk3 = 0, 0, 0
 
-    def atacar(self):
-        clv1, clv2, p, o = 0, 0, 0, 0 # indices clavijeros, progreso, ocurrencias
+    def atacar(self,number):
+        #clvdic = []
+        a,b = 0,0
+        if (number == 0):
+            a,b = 0,3
+        elif (number == 1):
+            a,b = 4,8
+        elif (number == 2):
+            a,b = 9,15
+        elif (number == 3):
+            a,b = 15,26
+
+        clv1, clv2, o = 0, 0, 0 # indices clavijeros, progreso, ocurrencias
 
         # Rendimiento: Asignación a variables locales
         scodify = self.codify
         sabc = self.abc
 
-
-        f = open('.\datos.txt', 'w').close()
-        f = open('.\datos.txt', 'a')
+        f = open('.\datos%s.txt'%(number), 'w').close()
+        f = open('.\datos%s.txt'%(number), 'a')
         f.write(((datetime.datetime.now()).strftime('Iniciado el dia %d-%m-%Y - Hora %H:%M:%S')))
-        for clv1 in range(26):
+        for clv1 in range(a,b):
             for clv2 in range(clv1+1, 26):
-                p += 1
                 inter = sabc[clv1] + sabc[clv2]
-                print ('\n%i de 325 Intercambio %s---------' % (p, inter))
+                print ('\nP%i Intercambio %s---------' % (number,inter))
                 trans_table = str.maketrans(sabc[clv2] + sabc[clv1], inter)
                 clvdic = [word.translate(trans_table) for word in self.dic]
                 msj = [word.translate(trans_table) for word in self.codigo]
-
                 nmsj = [self.abc.index(word) for word in msj]
-                '''nmsj = list()
-                for ch in msj:
-                    nmsj.append(self.abc.index(ch))'''
-
                 for k1 in range(26):
-                    for k2 in range(26):
+                    for k2 in range(26):    
                         for k3 in range(26):
                             self.rk1 = k1
                             self.rk2 = k2
@@ -76,6 +79,7 @@ class Bomba:
             self.rk2 += 1
         elif self.rk3 == 26:
             self.rk3 = 0
+        
 
     def encode(self, ch):
         self.rotar()
@@ -95,4 +99,17 @@ class Bomba:
             cod.append(self.abc[sencode(ch)])
         return ("".join(cod))
 
-Bomba().atacar()
+# Lanzar 4 hilos.
+def espacio(number):
+    Bomba().atacar(number)
+    print ("Proceso " + str(number) + " acabado")
+
+p_list = []
+
+if __name__ == '__main__':
+    for i in range(4):
+        p = Process(target=espacio, args=(i,))
+        p_list.append(p)
+
+for p in p_list:
+    p.start()

@@ -4,9 +4,9 @@ class Enigma:
     r2 =  list('AJDKSIRUXBLHWTMCQGZNPYFVOE')
     r3 =  list('BDFHJLCPRTXVZNYEIWGAKMUSQO')
     rfb = list('YRUHQSLDPXNGOKMIEBFZCWVJAT')
-    clv = list('BACEDFGHIJKLMNOPQRSTUVWXYZ')
-    key = list('AAA')
-    msj = list('AJXGSTMFRCTXBS')
+    clv = list('ABCDEFGHIJKLMNSPQROTUVWXYZ')
+    key = list('ADI')
+    msj = list('YLJKKVAWHAQTJITNQUPTJSHDBWGDSBEOWKLEDBYBJSSGCI')
 
     # Estado interno
     rk1, rk2, rk3 = 0,0,0
@@ -27,21 +27,21 @@ class Enigma:
         return clv[abc.index(ch)]
 
     def rotar(self):
-        self.rk3 += 1
-        if self.rk3 == 22:#w
-            self.rk2 += 1
-        elif self.rk3 == 26:
-            self.rk3 = 0
-        
+        if self.rk1 == 26:
+            self.rk1 = 0
+
         # En la posición previa autogira
         if self.rk2 == 4: #f
             self.rk2 += 1
             self.rk1 += 1
         elif self.rk2 == 26:
             self.rk2 = 0
-        
-        if self.rk1 == 26:
-            self.rk1 = 0
+
+        self.rk3 += 1
+        if self.rk3 == 22:#w
+            self.rk2 += 1
+        elif self.rk3 == 26:
+            self.rk3 = 0
 
     def encode(self,ch):
         ch = self.clav(ch,self.abc,self.clv)
