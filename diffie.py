@@ -14,15 +14,19 @@ def ExpM (n,x,p):
     return (final % p)
 
 def ataque (n,p, alice, bob):
-    i = 1
+    i = 0
     z = None
-    while True:
+    flag = 2
+    while flag != 0:
+        i += 1
         deco = ExpM(n,i,p)
         if deco == alice:
-            return ExpM(bob,i,p)
-        elif deco == bob:
-            return ExpM(alice,i,p)
-        i += 1
+            print('x de Alice: %i' % deco)
+            flag -=1
+        if deco == bob:
+            print('x de Bob: %i' % deco)
+            flag -=1
+    return ExpM(bob,i,p)
 
 # Ejemplo https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
 
@@ -43,5 +47,6 @@ print('Alice s: %i' % alice_s)
 bob_s = ExpM(alice,xb,p)
 print('Bob s: %i' % bob_s)
 
+print('---Ataque---')
 sDescifrada = ataque(n,p,alice,bob)
 print('Clave descifrada: %i' % sDescifrada)
