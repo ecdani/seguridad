@@ -1,5 +1,9 @@
+from multiprocessing import Process
+
 def ExpM (n,x,p):
-    b = bin(x)[2:]
+    #b = bin(x)[2:]
+    b ="{0:b}".format(x)
+
 
     final = 1
     lenb = len(b) - 1
@@ -13,8 +17,8 @@ def ExpM (n,x,p):
             final *= n
     return (final % p)
 
-def ataque (n,p, alice, bob):
-    i = 0
+def ataque (n,p, alice, bob, i):
+    #i = 0
     z = None
     flag = 2
     while flag != 0:
@@ -30,10 +34,12 @@ def ataque (n,p, alice, bob):
 
 # Ejemplo https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
 
-n = 65537#5
-p = 1372933 #23
-xa = 5858999999#6
-xb = 7888899999 #15
+n = int(7245627542842336859)  #65537 #5
+p = int(3523269789483225643)  #1372933 #23
+
+'''
+xa = 2930009534032416290
+xb = 6290936979721568605
 
 alice =  ExpM(n,xa,p) # 8
 print('Alice: %i' % alice)
@@ -46,7 +52,28 @@ print('Alice s: %i' % alice_s)
 
 bob_s = ExpM(alice,xb,p)
 print('Bob s: %i' % bob_s)
+'''
 
-print('---Ataque---')
-sDescifrada = ataque(n,p,alice,bob)
-print('Clave descifrada: %i' % sDescifrada)
+alice = int(2930009534032416290)#6
+bob = int(6290936979721568605) #15 # Bob el más grande siempre.
+
+
+
+
+# Lanzar 4 hilos.
+def espacio(number,i):
+    print('---Ataque---')
+    sDescifrada = ataque(n,p,alice,bob,i)
+    print('Clave descifrada: %i' % sDescifrada)
+    print ("Proceso " + str(number) + " acabado")
+
+p_list = []
+espacios = (0,int(bob/4),int(bob/2),int((bob/4)*3))
+
+if __name__ == '__main__':
+    for number in range(4):
+        p = Process(target=espacio, args=(number,espacios[number],))
+        p_list.append(p)
+
+for p in p_list:
+    p.start()
