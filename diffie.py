@@ -17,20 +17,14 @@ def ExpM (n,x,p):
             final *= n
     return (final % p)
 
-def ataque (n,p, alice, bob, i):
-    #i = 0
-    z = None
-    flag = 2
-    while flag != 0:
+def ataque (n,p, alice, bob, i,j):
+    while i != j :
         i += 1
         deco = ExpM(n,i,p)
         if deco == alice:
             print('x de Alice: %i' % i)
-            flag -=1
         if deco == bob:
             print('x de Bob: %i' % i)
-            flag -=1
-    return ExpM(bob,i,p)
 
 # Ejemplo https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
 
@@ -58,21 +52,18 @@ alice = int(2930009534032416290)#6
 bob = int(6290936979721568605) #15 # Bob el más grande siempre.
 
 
-
-
-# Lanzar 4 hilos.
-def espacio(number,i):
-    print('---Ataque---')
-    sDescifrada = ataque(n,p,alice,bob,i)
-    print('Clave descifrada: %i' % sDescifrada)
-    print ("Proceso " + str(number) + " acabado")
+def espacio(number):
+    number *= 10000000
+    while True:
+        print('---Ataque de %i a %i ---' % (number, number + 10000000))
+        ataque(n,p,alice,bob,number,number + 10000000)
+        number += 40000000
 
 p_list = []
-espacios = (0,int(bob/4),int(bob/2),int((bob/4)*3))
 
 if __name__ == '__main__':
     for number in range(4):
-        p = Process(target=espacio, args=(number,espacios[number],))
+        p = Process(target=espacio, args=(number,))
         p_list.append(p)
 
 for p in p_list:
