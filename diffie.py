@@ -21,10 +21,10 @@ def ataque (n,p, alice, bob):
         i += 1
         deco = ExpM(n,i,p)
         if deco == alice:
-            print('x de Alice: %i' % deco)
+            print('x de Alice: %i' % i)
             flag -=1
         if deco == bob:
-            print('x de Bob: %i' % deco)
+            print('x de Bob: %i' % i)
             flag -=1
     return ExpM(bob,i,p)
 
