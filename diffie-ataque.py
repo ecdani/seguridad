@@ -26,31 +26,12 @@ def ataque (n,p, alice, bob, i,j):
         if deco == bob:
             print('x de Bob: %i' % i)
 
-# Ejemplo https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
 
-n = int(7245627542842336859)  #65537 #5
-p = int(3523269789483225643)  #1372933 #23
+n = int(7245627542842336859)
+p = int(3523269789483225643)
 
-'''
-xa = 2930009534032416290
-xb = 6290936979721568605
-
-alice =  ExpM(n,xa,p) # 8
-print('Alice: %i' % alice)
-
-bob = ExpM(n,xb,p)
-print('Bob: %i' % bob)
-
-alice_s = ExpM(bob,xa,p)
-print('Alice s: %i' % alice_s)
-
-bob_s = ExpM(alice,xb,p)
-print('Bob s: %i' % bob_s)
-'''
-
-alice = int(2930009534032416290)#6
-bob = int(6290936979721568605) #15 # Bob el más grande siempre.
-
+alice = int(2930009534032416290)
+bob = int(6290936979721568605)
 
 def espacio(number):
     number *= 10000000
