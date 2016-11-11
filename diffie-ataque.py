@@ -1,10 +1,7 @@
 from multiprocessing import Process
 
 def ExpM (n,x,p):
-    #b = bin(x)[2:]
     b ="{0:b}".format(x)
-
-
     final = 1
     lenb = len(b) - 1
     n %= p
@@ -25,7 +22,6 @@ def ataque (n,p, alice, bob, i,j):
             print('x de Alice: %i' % i)
         if deco == bob:
             print('x de Bob: %i' % i)
-
 
 n = int(7245627542842336859)
 p = int(3523269789483225643)
